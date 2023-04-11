@@ -22,6 +22,8 @@
 
 <script setup>
     import { useRoute } from 'vue-router'
+    
+    const upperPath = '/temp/'
 
     let thisRoute = useRoute().path.split('/')[1]
     let thisRouteDetail = useRoute().params.id
@@ -43,7 +45,7 @@
     ]
 
     const callRandomImg = heroSecImgs[Math.floor(Math.random() * heroSecImgs.length)]
-    const subpageBg = `background-image: url('/images/${callRandomImg}')`
+    const subpageBg = `background-image: url('${upperPath}images/${callRandomImg}')`
 </script>
 
 <style lang="scss" scoped>

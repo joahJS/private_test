@@ -23,21 +23,13 @@
     import ContactUs from '@/components/ContactUs.vue'
     import BreadCrumbs from '@/components/breadCrumb.vue'
 
-    const upperPath = '/temp/'
+    //store에서 데이터 import
+    import { useCatesStore } from '@/stores/catesStore'
+    import { storeToRefs } from 'pinia';
 
-    const cateList = ref([
-        {
-            url: '/cate01/',
-            children: [
-                {
-                    number: '0',
-                    thumImg: `${upperPath}images/cate/img03.jpg`,
-                    title: '고무링삽입형 VR관',
-                    subTitle: '서브타이틀인데 있을수도 길수도 짧을수도있음 변수에 대응',
-                }
-            ]
-        }
-    ])
+    const catesStore = useCatesStore()
+    const { cateList } = storeToRefs(catesStore)
+
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>

@@ -1,13 +1,13 @@
 <template>
     <subPageHero />
-    <div id="outlineSection">
+    <div id="outlineSection" v-for="introItem in outlineGroup">
         <BreadCrumbs />
         
-        <section id="grtOutline" class="web-common-inner">
+        <section id="grtOutline" class="web-common-inner" v-for="outItem in introItem.outlineChildren">
             <h1 class="page-title">개요</h1>
 
             <p id="grtText" class="page-title-bottom">
-                "고객과의 신뢰를 기업 이념으로 세계적인 기술혁신을 통하여 항상 최고의 제품만을 생산할 것을 약속합니다."
+                {{ outItem.outTitle }}
             </p>
 
             <section id="grtBtm">
@@ -15,14 +15,11 @@
                     <img src="/src/assets/images/grt_sample.jpg" alt="CEO picture">
                 </div>
                 <div class="grt-texts-div">
-                    <p>안녕하십니까? 저희 홈페이지를 찾아주신 고객님을 진심으로 환영합니다.</p>
-                    <p>(주)CONCRETE는 1900년 설립 이래 차별화된 소재와 축적된 제조기술을 발판으로 xx 등 다양한 제품 개발로 시장을 선도하는 기업으로 거듭났습니다. </p>
-                    <p>(주)CONCRETE는 앞으로도 고객님들의 목소리에 귀 기울이며 업계를 선도하는 제품과 서비스로 다가설 것을 약속드리며 항상 최선으로 노력하는 모습 보여드리겠습니다.</p>
-                    <p>앞으로도 많은 애정과 관심 부탁드립니다.</p>
-                    <p>감사합니다.</p>
+                    <p v-for="subItems in outItem.outTexts">{{ subItems.texts }}</p>
+ 
                     <div data-grt-ceo-names>
-                        <p class="grt-ceo-name">대표이사 김벽돌</p>
-                        <img data-grt-ceo-sign src="/src/assets/images/sign_example.png" alt="대표자 날인">
+                        <p class="grt-ceo-name">{{ outItem.outCEO }}</p>
+                        <img data-grt-ceo-sign :src="outItem.outSign" alt="대표자 날인">
                     </div>
                     
                 </div>
@@ -32,30 +29,29 @@
         
 
         <div id="ideology"> 
-            <section id="ideoTexts" class="web-common-inner">
+            <section id="ideoTexts" class="web-common-inner" v-for="ideoItem in introItem.ideoChildren">
                 <div id="ideoTitle">
                     <h1 class="page-title">기업이념</h1>
-                    <!-- <p class="corp-name">
-                        (주)<span class="font-color-main">C</span>ONCRETE
-                    </p> -->
                     <p class="page-title-bottom">
-                        "현실에 만족하지 않고 앞서가는 기술력으로 세상에 기여한다"
+                        {{ ideoItem.ideoTitle }}
                     </p>
-                    <p class="page-subtitle-texts">(주)CONCRETE는 지속가능한 성장을 위한 목표와 미래를 제시하여 사회와 고객에 지속적으로 기여할 것입니다.</p>
+                    <p class="page-subtitle-texts">
+                        {{ ideoItem.ideoSubT }}
+                    </p>
                 </div>
                 <div id="ideoLists">
                     <ul data-ideo-list>
-                        <li>
-                            <p data-ideo-subtitle><span class="font-color-main">VISION</span><span>비전</span></p>
-                            <p data-ideo-subtext>미래를 선도하는 기술력</p>
+                        <li v-for="ideoFirst in ideoItem.ideoFirst">
+                            <p data-ideo-subtitle><span class="font-color-main">{{ ideoFirst.ideoNameEng }}</span><span>{{ ideoFirst.ideoName }}</span></p>
+                            <p data-ideo-subtext>{{ ideoFirst.ideoTexts }}</p>
                         </li>
-                        <li>
-                            <p data-ideo-subtitle><span class="font-color-main">COREVALUE</span><span>핵심가치</span></p>
-                            <p data-ideo-subtext>고객감동, 품질경영, 가치창조</p>
+                        <li  v-for="ideoSecond in ideoItem.ideoSecond">
+                            <p data-ideo-subtitle><span class="font-color-main">{{ ideoSecond.ideoNameEng }}</span><span>{{ ideoSecond.ideoName }}</span></p>
+                            <p data-ideo-subtext>{{ ideoSecond.ideoTexts }}</p>
                         </li>
-                        <li>
-                            <p data-ideo-subtitle><span class="font-color-main">PHILOSOPHY</span><span>기업이념</span></p>
-                            <p data-ideo-subtext>앞서가는 기술로 고객감동을 실현하고 생각하는 글로벌기업으로 성장해 나간다.</p>
+                        <li v-for="ideoThird in ideoItem.ideoThird">
+                            <p data-ideo-subtitle><span class="font-color-main">{{ ideoThird.ideoNameEng }}</span><span>{{ ideoThird.ideoName }}</span></p>
+                            <p data-ideo-subtext>{{ ideoThird.ideoTexts }}</p>
                         </li>
                     </ul>
                 </div>
@@ -70,6 +66,14 @@
     import subPageHero from '@/components/subPageHero.vue'
     import ContactUs from '@/components/ContactUs.vue'
     import BreadCrumbs from '@/components/breadCrumb.vue'
+
+    //store에서 데이터 import
+    import { useIntrosStore } from '@/stores/introsStore'
+    import { storeToRefs } from 'pinia';
+
+    const introsStore = useIntrosStore()
+    const { outlineGroup } = storeToRefs(introsStore)
+
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>
@@ -235,7 +239,7 @@
    }
 
    [data-ideo-list] li p {
-        @apply break-keep;
+        @apply break-all;
 
         &:last-child {
             line-height: 1.5;

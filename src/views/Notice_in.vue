@@ -36,6 +36,7 @@
 
     import { useRoute } from 'vue-router'
 
+    ////store에서 데이터 import
     import { useNoticeStore } from '@/stores/noticeStore'
     import { storeToRefs } from 'pinia';
 

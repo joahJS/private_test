@@ -6,32 +6,32 @@
 
         <h1 class="page-title">견적문의</h1>
 
-        <form>
+        <form method="POST" action="https://script.google.com/macros/s/AKfycbysALxosnJD2movFfCpRyJhFDDuwrY9bO8wKK1f-IB3FZ4OKI9EMKip6E3nEdVayKtw/exec" target="frAttachFiles">
             <div class="contact-input-box w-full ">
                 <p class="contact-input-name">제목</p>
-                <p class="w-full self-center"><input type="text" class="contact-input-line" ></p>
+                <p class="w-full self-center"><input type="text" class="contact-input-line" name="제목"></p>
             </div>
 
             <div class="contact-input-box w-1/2">
                 <p class="contact-input-name">작성자</p>
-                <p class="w-full self-center"><input type="text" class="contact-input-line" ></p>
+                <p class="w-full self-center"><input type="text" class="contact-input-line" name="작성자" ></p>
             </div>
             <div class="contact-input-box w-1/2">
                 <p class="contact-input-name">회사명</p>
-                <p class="w-full self-center"><input type="text" class="contact-input-line" ></p>
+                <p class="w-full self-center"><input type="text" class="contact-input-line" name="회사명"></p>
             </div>
             <div class="contact-input-box w-1/2">
                 <p class="contact-input-name">연락처</p>
-                <p class="w-full self-center"><input type="text" class="contact-input-line" ></p>
+                <p class="w-full self-center"><input type="text" class="contact-input-line" name="연락처"></p>
             </div>
             <div class="contact-input-box w-1/2">
                 <p class="contact-input-name">이메일</p>
-                <p class="w-full self-center"><input type="text" class="contact-input-line" ></p>
+                <p class="w-full self-center"><input type="text" class="contact-input-line" name="이메일"></p>
             </div>
 
             <div class="contact-input-box w-full ">
                 <p class="contact-input-name">내용</p>
-                <p class="w-full self-center"><textarea class="border w-full resize-none p-2 h-36 outline-none "></textarea></p>
+                <p class="w-full self-center"><textarea class="border w-full resize-none p-2 h-36 outline-none " name="본문"></textarea></p>
             </div>
 
             <div class="consent-form">
@@ -54,19 +54,46 @@
                 </ul>
             </div>
             <div class="p-2 w-full">
-                <label><input type="checkbox"/> 개인정보 수집 및 이용 내용에 동의 합니다.</label>
+                <label><input type="checkbox" v-model="agreeIsCheck" name="agreeIsCheck" ref="agreeCheck"/> 개인정보 수집 및 이용 내용에 동의 합니다.</label>
             </div>
 
-            <div class="mx-auto mt-10 mb-10">
-                <button class="all-btn">보내기</button>
+            <div data-cont-agree-box class="mx-auto mt-10 mb-10">
+                <button :disabled="!agreeIsCheck" @click="submitComplete = !submitComplete" class="all-btn">보내기</button>
+                <p v-show="!agreeIsCheck">※ 개인정보 수집 및 이용 내용에 동의해주세요.</p>
             </div>
         </form>
     </div>
+
+    <iframe name="frAttachFiles" style="display: none"></iframe>
+
+    <section data-submit-comp-back v-show="submitComplete">
+        <div data-submit-comp-window>
+            <div data-submit-comp-text>
+                <p>견적문의가 완료되었습니다.</p>
+                <p>빠른 시일 내에 답변드리겠습니다.</p>
+            </div>
+            <button class="all-btn" @click="submitComplete = !submitComplete" type="button">닫기</button>
+        </div>
+    </section>
 </template> <!-- Template Ends -->
 
 <script setup>
     import subPageHero from '@/components/subPageHero.vue'
     import BreadCrumbs from '@/components/breadCrumb.vue'
+
+    let agreeIsCheck = ref(false)
+    const submitComplete = ref(false)
+
+    
+    function checkToAdmin(e) {
+        console.log(e.target)
+        if ( !agreeIsCheck ) {
+            console.log('체크안됨!')
+        } else {
+            console.log('체크됨')
+        }
+    }
+    
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>
@@ -118,6 +145,68 @@ form {
 
 .consent-form {
     @apply border p-5 w-full mt-5;
+}
+
+[data-cont-agree-box] {
+    @apply flex flex-col items-center;
+
+    gap: 1rem;
+
+    p {
+        opacity: .5;
+        line-height: 1.5;
+    }
+}
+
+// 전송 확인창(팝업)
+
+[data-submit-comp-back] {
+    @apply fixed top-0 left-0;
+
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(var(--black), .85);
+    z-index: 999;
+}
+
+[data-submit-comp-window] {
+    @apply absolute flex flex-col;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 2rem;
+    background-color: rgb(var(--white));
+    border-radius: .25rem;
+    min-width: 20vw;
+
+    button {
+        &.all-btn {
+            width: 6rem;
+            padding: .5rem .75rem;
+            margin: 1rem auto 0;
+        }
+    }
+}
+
+*:disabled {
+    opacity: .25;
+}
+
+
+
+[data-submit-comp-text] {
+    @apply flex flex-col justify-center items-center;
+
+    gap: .5rem;
+
+    p {
+        &:first-child {
+            @apply font-bold;
+
+            font-size: var(--font18);
+        }
+    }
 }
 
 //media 반응형

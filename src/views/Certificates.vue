@@ -46,47 +46,12 @@
     import ContactUs from '@/components/ContactUs.vue'
     import BreadCrumbs from '@/components/breadCrumb.vue'
 
-    const upperPath = '/temp/'
+    //store에서 데이터 import
+    import { useIntrosStore } from '@/stores/introsStore'
+    import { storeToRefs } from 'pinia';
 
-    const certGroup = ref([
-        {
-            certIndex: 0,
-            cate: '특허인증',
-            certTtitle: '하수도용 콘크리트 맨홀 블록',
-            // imgUrl: '/temp/images/cert_sample_01.jpg',
-            imgUrl: `${upperPath}images/cert_sample_01.jpg`,
-            certNumber: '97-08-050',
-            certDate: '2023-04-01',
-            isView: false
-        },
-        {
-            certIndex: 1,
-            cate: '안전인증',
-            certTtitle: '하수도용 콘크리트 맨홀 블록',
-            imgUrl: `${upperPath}images/cert_sample_01.jpg`,
-            certNumber: 'KS F 4012',
-            certDate: '2023-04-01',
-            isView: false
-        },
-        {
-            certIndex: 2,
-            cate: '환경인증',
-            certTtitle: '하수도용 콘크리트 맨홀 블록',
-            imgUrl: `${upperPath}images/cert_sample_01.jpg`,
-            certNumber: 'KS F 4012',
-            certDate: '2023-04-01',
-            isView: false
-        },
-        {
-            certIndex: 3,
-            cate: '기타',
-            certTtitle: '하수도용 콘크리트 맨홀 블록',
-            imgUrl: `${upperPath}images/cert_sample_01.jpg`,
-            certNumber: 'KS F 4012',
-            certDate: '2023-04-01',
-            isView: false
-        }
-    ])
+    const introsStore = useIntrosStore()
+    const { certGroup } = storeToRefs(introsStore)
 
 </script>
 

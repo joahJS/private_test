@@ -1,4 +1,4 @@
-//보도자료 리스트
+//보도자료 스토어
 
 import { defineStore } from 'pinia'
 

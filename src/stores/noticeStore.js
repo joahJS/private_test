@@ -1,4 +1,4 @@
-//공지사항
+//공지사항 스토어
 
 import { defineStore } from 'pinia'
 

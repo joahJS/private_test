@@ -46,26 +46,17 @@
 
     import { useRoute } from 'vue-router'
 
-const getParams = useRoute()
-const getId = parseInt(getParams.params.id)
+        ////store에서 데이터 import
+    import { useDatasStore } from '@/stores/datasStore'
+    import { storeToRefs } from 'pinia';
 
-const upperPath = '/temp/'
+    const dataStore = useDatasStore()
+    const { dataGroup } = storeToRefs(dataStore)
 
-const dataGroup = ref([
-        {
-            bindIndex:'0',
-            number: '1',
-            title: '카달로그',
-            date: '2021.12.03',
-            thumImg: '',
-            texts: 'XX콘크리트 카달로그 아래 파일을 클릭 후 다운로드 해주시길 바랍니다.',
-            uploaded: [
-                {fileName:`${upperPath}/catalog/catalog1.pdf`, name:'카달로그.pdf'}
-            ]
-        },
-        
+    const getParams = useRoute()
+    const getId = parseInt(getParams.params.id)
 
-    ])
+
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>

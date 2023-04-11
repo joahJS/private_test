@@ -4,9 +4,9 @@
         <BreadCrumbs />
         <h1 class="page-title">연혁</h1>
         <ul id="hsMilestone">
-            <li @click="goToSlide(0)">최근</li>
-            <li @click="goToSlide(3)">~2020</li>
-            <li @click="goToSlide(7)">~2010</li>        
+            <li @click="goToSlide(0)">{{ firstYear }}</li>
+            <li>~</li>
+            <li @click="goToSlide(lastYearIndex)">{{ lastYear }}</li>        
         </ul>
     </div>
     <div id="hsSwipers">
@@ -47,6 +47,13 @@
     // Import Swiper styles
     import 'swiper/css/bundle';
 
+    //store에서 데이터 import
+    import { useIntrosStore } from '@/stores/introsStore'
+    import { storeToRefs } from 'pinia';
+
+    const introsStore = useIntrosStore()
+    const { hsGroup } = storeToRefs(introsStore)
+
     const historySwiper = {
         modules: [Navigation, Scrollbar],
         slidesPerView: 2,
@@ -58,7 +65,6 @@
         }
     }
     
-
     // 이 스와이퍼를 swiperInstance로 지정해서 value를 가져옴
 
     const swiperInstance = ref()
@@ -68,93 +74,26 @@
         console.log(swiperInstance.value)
     }
 
-    // 슬라이드 이동하기
+    // 슬라이드 마일스톤 이름 정하기
+
+    const lastYearIndex = hsGroup.value.length - 1
+    const lastYear = hsGroup.value[lastYearIndex].hsYear
+    const firstYear = hsGroup.value[0].hsYear
+
+
+    // 마일스톤에 해당하는 연도로 이동하기
 
     function goToSlide(e) {
-        console.log(this)
+        
+        console.log(lastYear)
         
         swiperInstance.value?.slideTo(e)
-        
     }
-
-
-    const hsGroup = ref([
-        {
-            hsIndex: 0,
-            hsYear: 2023,
-            childrens: [
-                { hsItem: '유망중소기업 지정' },
-                { hsItem: '철근콘크리트 수로관 의장등록' },
-                { hsItem: '품질경영 공로상' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2022,
-            childrens: [
-                { hsItem: '명문 장수기업인 표창장 (중소기업중앙회)' },
-                { hsItem: '품질경영실천 표창(산업자원부장관)' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2021,
-            childrens: [
-                { hsItem: 'KS인증 획득(97-08-050) (한국표준협회)' },
-                { hsItem: '공장 신축 이전' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2020,
-            childrens: [
-                { hsItem: '철근 콘크리트 벤치플룸(2종, 3종) 생산가동' },
-                { hsItem: '철근콘크리트 수로관 뚜껑 (실용신안 제0185598호)' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2019,
-            childrens: [
-                { hsItem: '단체표준표시 인증획득' },
-                { hsItem: '(한국콘크리트 공업협동조합연합회, 이형수로관)' },
-                { hsItem: '품질관리유공 도지사 표창' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2018,
-            childrens: [
-                { hsItem: 'NET인증-PE라이너관맨홀 (환경부)' },
-                { hsItem: '대형옹벽블록 성형기 도입(이태리)' },
-                { hsItem: '조달청 우수제품지정 (고무링삽입 VR관)' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2017,
-            childrens: [
-                { hsItem: '품질경쟁력 50대기업 선정 (산업자원부)' },
-                { hsItem: '기술결쟁력 우수기업 선정(중소기업청)' },
-                { hsItem: '단체표준표시인증-호안및옹벽블록' }
-            ]
-        },
-        {
-            hsIndex: 0,
-            hsYear: 2016,
-            childrens: [
-                { hsItem: 'KS인증(VR관, 맨홀, 경계블록)' },
-                { hsItem: '철근콘크리트 (사각) 수로관 제조설비 도입' },
-                { hsItem: '클린사업장 인증(한국산업안전보건공단)' }
-            ]
-        }
-    ]);
 
     if ( matchMedia("(max-width: 1279px)").matches ) {
             // 1279px보다 화면이 작을 때
-    
 
-            // 모든 연도 뒤의 두글자만 잘라 `xx 형태로 변경
+            // 모바일에서 모든 연도 뒤의 두글자만 잘라 `xx 형태로 변경
             hsGroup.value.map(function(e) {
                 var yearStr = e.hsYear.toString();
                 var yearElem = yearStr.substring(2, 4);
@@ -162,11 +101,7 @@
                 e.hsYear = '`' + yearElem
                 
                 return 
-            })
-
-
-            // historySwiper.slidesPerView = '1.5'
-            
+            })            
 
         } else {
             // 1279px보다 화면이 클 때
@@ -199,10 +134,11 @@
     }
 
     #hsMilestone {
-        @apply grid w-1/2 justify-between items-center relative top-0;
+        @apply grid justify-between items-center relative top-0;
 
+        width: fit-content;
         margin:2rem auto 4rem;
-        gap: 1rem;
+        
         animation: mile-animate .75s ease-in backwards;
         grid-template-columns: repeat(3, 1fr);
 
@@ -210,6 +146,11 @@
             padding: 1rem;
             cursor: pointer;
             text-align: center;
+
+            &:nth-child(2):hover {
+                color: rgb(var(--black));
+                cursor: default;
+            }
 
             &:hover {
                 color: rgba(var(--main), 1);
@@ -299,7 +240,7 @@
                 width: .75rem;
                 height: .75rem;
                 background-color: #dcdcdc;
-                top: 6.65rem;
+                top: 5.65rem;
                 left: 0;
                 border-radius: 1rem;
             }
@@ -361,7 +302,7 @@
     #hsSwipers {
 
         h4 {
-            font-size: var(--font80);
+            font-size: var(--font54);
         }
     }
 

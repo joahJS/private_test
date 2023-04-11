@@ -5,47 +5,45 @@
         
         <h1 class="page-title">오시는 길</h1>
         <ul id="pathMilestone">
-            <li><a href=#>본사</a></li>
-            <li><a href="#pathMap02">개발센터</a></li>
+            <li v-for="(goSection, getIndex) in pathGroup" @click="goToSection(getIndex)">{{ goSection.sectionTitle }}</li>
         </ul>
         
     </div>
-    <div id="pathFrame">
-        <section id="pathMap01" class="web-common-inner" data-path-map-headoffice>
-            <div data-path-map-explain>
-                <div data-path-map-pinetitle>주식회사<span>소나무정보기술</span></div>
+    <div id="pathFrame" ref="textItems">
+        <section data-path-map-headoffice v-for="(sectionItem, sectionIdx) in pathGroup">
+            <div data-path-map-explain class="web-common-inner">
+                <div data-path-map-pinetitle v-for="titleItem in sectionItem.compName">{{ titleItem.compFirst }}<span>{{ titleItem.compLast }}</span></div>
                 <div data-path-map-texts>
-                    <h2>본사</h2>
+                    <h2>{{ sectionItem.sectionTitle }}</h2>
                     <div id="pathContact">
                         <div>
                             <p data-path-map-subtitles>TEL</p>
-                            <p data-path-map-subtexts> +82-51-714-1234</p>
+                            <p data-path-map-subtexts>{{ sectionItem.tel }}</p>
                         </div>
                         <div>
                             <p data-path-map-subtitles>FAX</p>
-                            <p data-path-map-subtexts> +82-31-920-6609</p>
+                            <p data-path-map-subtexts>{{ sectionItem.fax }}</p>
                         </div>
                         <div>
                             <p data-path-map-subtitles>MAIL</p>
-                            <p data-path-map-subtexts>support@pineit.co.kr</p>
+                            <p data-path-map-subtexts>{{ sectionItem.mail }}</p>
                         </div>
                     </div>
                     <div id="pathLocate">
                         <div>
                             <p data-path-map-subtitles>LOCATE</p>
-                            <p data-path-map-subtexts>부산광역시 부산진구 엄광로 176, 331호 <span>(동의대학교 산학협력단)</span> </p>
+                            <p data-path-map-subtexts>{{ sectionItem.locate }}</p>
                         </div>
                         <div>
                             <p data-path-map-subtitles>PUBLIC TRANSPORT</p>
-                            <div data-path-public-route>
+                            <div data-path-public-route v-for="publicItem in sectionItem.publicTr">
                                 <div>
                                     <p data-path-map-subtexts>지하철</p>
-                                    <p data-path-public-texts>신평 방면 승차 / 서면역에서 2호선(호포방면)으로 환승 / 동의대역 하차 / 동의대 순환버스</p>
+                                    <p data-path-public-texts v-for="subways in publicItem.subway">{{ subways.subwItem }}</p>
                                 </div>
                                 <div>
                                     <p data-path-map-subtexts>버스</p>
-                                    <p data-path-public-texts>가야로,서면 방면 승차 / 가야파출소 앞 하차 / 동의대 순환버스</p>
-                                    <p data-path-public-texts>59,61번(가야로방면)승차 / 가야파출소 앞 하차 / 동의대순환버스</p>
+                                    <p data-path-public-texts v-for="busways in publicItem.bus">{{ busways.busItem }}</p>
                                 </div>
                             </div>
                         </div>
@@ -54,59 +52,11 @@
                     
                 </div>
             </div>
-            <div data-path-map-container>
-                <iframe id="" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3262.609751841863!2d129.03134551610918!3d35.1414109803238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3568ebb40a6cf031%3A0xf255b7423a881690!2zKOyjvCnshozrgpjrrLTsoJXrs7TquLDsiKA!5e0!3m2!1sko!2skr!4v1679979882979!5m2!1sko!2skr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div data-path-map-container class="web-common-inner">
+                <iframe :src="sectionItem.mapUrl" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </section>
 
-        <section id="pathMap02" data-path-map-researchinst >
-            <div id="pathMap02Container" class="web-common-inner">
-                <div data-path-map-explain>
-                    <div data-path-map-pinetitle>주식회사<span>소나무정보기술</span></div>
-                    <div data-path-map-texts>
-                        <h2>개발센터</h2>
-                        <div id="pathContact">
-                            <div>
-                                <p data-path-map-subtitles>TEL</p>
-                                <p data-path-map-subtexts> +82-51-714-0034</p>
-                            </div>
-                            <div>
-                                <p data-path-map-subtitles>FAX</p>
-                                <p data-path-map-subtexts> +82-31-920-6609</p>
-                            </div>
-                            <div>
-                                <p data-path-map-subtitles>MAIL</p>
-                                <p data-path-map-subtexts>support@pineit.co.kr</p>
-                            </div>
-                        </div>
-                        <div id="pathLocate">
-                            <div>
-                                <p data-path-map-subtitles>LOCATE</p>
-                                <p data-path-map-subtexts>부산광역시 사상구 대동로 303 부산디지털밸리 1203호 <span>(동의대학교 산학협력단)</span> </p>
-                            </div>
-                            <div>
-                                <p data-path-map-subtitles>PUBLIC TRANSPORT</p>
-                                <div data-path-public-route>
-                                    <div>
-                                        <p data-path-map-subtexts>지하철</p>
-                                        <p data-path-public-texts>신평 방면 승차 / 서면역에서 2호선(호포방면)으로 환승 / 동의대역 하차 / 동의대 순환버스</p>
-                                    </div>
-                                    <div>
-                                        <p data-path-map-subtexts>버스</p>
-                                        <p data-path-public-texts>가야로,서면 방면 승차 / 가야파출소 앞 하차 / 동의대 순환버스</p>
-                                        <p data-path-public-texts>59,61번(가야로방면)승차 / 가야파출소 앞 하차 / 동의대순환버스</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div data-path-map-container class="frame-two" >
-                <iframe id="" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3262.609751841863!2d129.03134551610918!3d35.1414109803238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3568ebb40a6cf031%3A0xf255b7423a881690!2zKOyjvCnshozrgpjrrLTsoJXrs7TquLDsiKA!5e0!3m2!1sko!2skr!4v1679979882979!5m2!1sko!2skr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </section>
     </div>
     
     <ContactUs />
@@ -116,6 +66,25 @@
     import subPageHero from '@/components/subPageHero.vue'
     import ContactUs from '@/components/ContactUs.vue'
     import BreadCrumbs from '@/components/breadCrumb.vue'
+
+    //store에서 데이터 import
+    import { useIntrosStore } from '@/stores/introsStore'
+    import { storeToRefs } from 'pinia';
+
+    const introsStore = useIntrosStore()
+    const { pathGroup } = storeToRefs(introsStore)
+
+
+    //#pathMilestone 에서 선택한 영역으로 이동
+    const textItems = ref(null)
+
+    function goToSection(getIndex) {
+
+        let moveTarget = textItems.value.children
+
+        moveTarget[getIndex].scrollIntoView({behavior: "smooth"})
+    }
+
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>
@@ -146,16 +115,32 @@
         gap: 12rem;
         padding: 1rem 0 0;
 
-        iframe{
+        > section {
+            animation: map01-animate .75s ease-in backwards;
+            animation-delay: .75s;
+
+            &:nth-child(even) {
+                background-color: rgba(var(--main), 1);
+                padding: 12rem 0;
+                animation: map02-animate .75s ease-in backwards;
+                animation-delay: 1.5s;
+
+                [data-path-map-texts] {
+                    color: rgba(var(--white), 1);
+                }
+
+                [data-path-map-pinetitle] {
+                    color: rgba(var(--white), 1);
+                }
+            }
+        }
+
+        iframe {
             width: 100%;
-            height: 20vh;   
+            height: 33vh;   
         }
    }
 
-   #pathMap01 {
-        animation: map01-animate .75s ease-in backwards;
-        animation-delay: .75s;
-   }
 
    @keyframes map01-animate {
         0% {
@@ -169,16 +154,6 @@
         }
    }
 
-   #pathMap02 {
-        background-color: rgba(var(--main), 1);
-        padding: 12rem 0;
-        animation: map02-animate .75s ease-in backwards;
-        animation-delay: 1.5s;
-
-        [data-path-map-texts] {
-            color: rgba(var(--white), 1);
-        }
-   }
 
    @keyframes map02-animate {
         0% {
@@ -232,16 +207,11 @@
         }
    }
 
-   #pathMap02 [data-path-map-pinetitle] {
-        color: rgba(var(--white), 1);
-   }
-
    [data-path-map-explain] {
         @apply grid;
 
         gap: 2rem;
         grid-template-columns: 1fr 4fr;
-        margin-bottom: 1.5rem;
    }
 
    [data-path-map-texts] {
@@ -335,7 +305,7 @@
         }
 
         #pathContact {
-            >div {
+            > div {
                 display: flex;
                 align-items: center;
                 gap: 1rem;
@@ -352,7 +322,7 @@
             margin: 0 auto;
         }
 
-        #pathMap02 {
+        #pathFrame > section:nth-child(even) {
             padding: 4rem .25rem;
         }
          .web-common-inner {
