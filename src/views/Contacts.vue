@@ -85,15 +85,6 @@
     const submitComplete = ref(false)
 
     
-    function checkToAdmin(e) {
-        console.log(e.target)
-        if ( !agreeIsCheck ) {
-            console.log('체크안됨!')
-        } else {
-            console.log('체크됨')
-        }
-    }
-    
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>
@@ -167,6 +158,7 @@ form {
     height: 100vh;
     background-color: rgba(var(--black), .85);
     z-index: 999;
+    transition: all 2s;
 }
 
 [data-submit-comp-window] {
