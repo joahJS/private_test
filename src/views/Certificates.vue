@@ -56,6 +56,9 @@
 </script>
 
 <style lang="scss" scoped>
+    img {
+        pointer-events: none;
+    }
 
     .page-title {
         animation: title-animate .75s ease-in backwards;

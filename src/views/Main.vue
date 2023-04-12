@@ -7,92 +7,42 @@
                 콘크리트 회사만의 자부심
             </h1>
 
-            <div id="mainIntroGrid">
+            
+            <div id="mainIntroGrid" v-for="item in firstIntro">
+                <!-- 최초 소개 블록 -->
                 <div class="main-intro-block">
                     <div class="main-intro-block-catchphrase">
-                        <p class="catchphrase-main">품질에 대한 신뢰로 다져온 100년</p>
-                        <p class="catchphrase-sub">콘크리트 회사의 최고 자산은 고객의 믿음입니다.</p>
+                        <p class="catchphrase-main">{{ item.firstTitle }}</p>
+                        <p class="catchphrase-sub">{{ item.firstText }}</p>
                     </div>
                 </div>
 
-                <div class="main-intro-block">
+                <!-- 아이템 반복구간(4종) -->
+                <div class="main-intro-block" v-for="subItem in item.children">
                     <div class="main-intro-block-description">
                         <dl class="main-intro-block-overlay">
                             <dt class="main-intro-block-title">
-                                투습성 시멘트를 이용한 자연 친화적 공법
+                                {{ subItem.itemTitle }}
                             </dt>
 
                             <dd class="main-intro-block-subtext">
-                                온습도에 의한 인장이 적은 특수 소재를 개발하여 물이 투과해도 내구성에 전혀 영향을 주지 않습니다.
+                                {{ subItem.itemText }}
                             </dd>
                         </dl>
                     </div>
 
                     <div class="main-intro-block-background">
-                        <img src="/images/intro-block/intro-block-01.jpg" alt="">
+                        <img :src="subItem.itemImg" alt="">
                     </div>
                 </div>
 
-                <div class="main-intro-block">
-                    <div class="main-intro-block-description">
-                        <dl class="main-intro-block-overlay">
-                            <dt class="main-intro-block-title">
-                                모듈러 블록으로 단기간 속성 구축
-                            </dt>
-
-                            <dd class="main-intro-block-subtext">
-                                정밀 제작된 모듈러 블록을 이용하여 마치 조립하듯 건축이 가능합니다.
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <div class="main-intro-block-background">
-                        <img src="/images/intro-block/intro-block-02.jpg" alt="">
-                    </div>
-                </div>
-
-                <div class="main-intro-block">
-                    <div class="main-intro-block-description">
-                        <dl class="main-intro-block-overlay">
-                            <dt class="main-intro-block-title">
-                                충격 흡수력이 좋은 속건성 런웨이 콘크리트
-                            </dt>
-
-                            <dd class="main-intro-block-subtext">
-                                충격을 흡수하고 습기를 빠르게 빨아들여 건조시키는, 보행에 최적화된 소재입니다.
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <div class="main-intro-block-background">
-                        <img src="/images/intro-block/intro-block-03.jpg" alt="">
-                    </div>
-                </div>
-
-                <div class="main-intro-block">
-                    <div class="main-intro-block-description">
-                        <dl class="main-intro-block-overlay">
-                            <dt class="main-intro-block-title">
-                                3D 프린팅 맞춤형 블록 제작
-                            </dt>
-
-                            <dd class="main-intro-block-subtext">
-                                광물 및 금속 프린팅이 가능한 특수 3D 프린터로 블록의 형태 및 소재를 원하는 대로 제작할 수 있습니다.
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <div class="main-intro-block-background">
-                        <img src="/images/intro-block/intro-block-04.jpg" alt="">
-                    </div>
-                </div>
-
+                <!-- 마지막 소개 블록 -->
                 <div class="main-intro-block">
                     <div class="main-intro-block-custom">
-                        <h2 class="main-intro-block-custom-ad">제품을 만든 사람들에게 구매하세요.</h2>
+                        <h2 class="main-intro-block-custom-ad">{{ item.lastTitle }}</h2>
 
                         <div class="main-intro-button catalogue">
-                            <a :href="catalogUrl">
+                            <a :href="item.catalogUrl">
                                 <i class="ri-booklet-line"></i>
                                 <span>카탈로그</span>
                             </a>
@@ -126,6 +76,39 @@
     const upperPath = '/temp/'
 
     const catalogUrl = `..${upperPath}catalog/catalog1.pdf`
+
+    const firstIntro = ref([
+        {
+            firstTitle: '품질에 대한 신뢰로 다져온 100년',
+            firstText: '콘크리트 회사의 최고 자산은 고객의 믿음입니다.',
+            lastTitle: '제품을 만든 사람들에게 구매하세요.', 
+            catalogUrl: `..${upperPath}catalog/catalog1.pdf`,
+            children: [
+                {
+                    itemTitle: '투습성 시멘트를 이용한 자연 친화적 공법',
+                    itemText: '온습도에 의한 인장이 적은 특수 소재를 개발하여 물이 투과해도 내구성에 전혀 영향을 주지 않습니다.',
+                    itemImg: '/images/intro-block/intro-block-01.jpg',
+                },
+                {
+                    itemTitle: '모듈러 블록으로 단기간 속성 구축',
+                    itemText: '정밀 제작된 모듈러 블록을 이용하여 마치 조립하듯 건축이 가능합니다.',
+                    itemImg: '/images/intro-block/intro-block-02.jpg',
+                },
+                {
+                    itemTitle: '충격 흡수력이 좋은 속건성 런웨이 콘크리트',
+                    itemText: '충격을 흡수하고 습기를 빠르게 빨아들여 건조시키는, 보행에 최적화된 소재입니다.',
+                    itemImg: '/images/intro-block/intro-block-03.jpg',
+                },
+                {
+                    itemTitle: '3D 프린팅 맞춤형 블록 제작',
+                    itemText: '광물 및 금속 프린팅이 가능한 특수 3D 프린터로 블록의 형태 및 소재를 원하는 대로 제작할 수 있습니다.',
+                    itemImg: '/images/intro-block/intro-block-04.jpg',
+                },
+            ]
+        }
+        
+
+    ])
 </script> <!-- Logic Ends -->
 
 <style lang="scss" scoped>
@@ -194,11 +177,13 @@
     .catchphrase-main {
         font-size: 20px;
         font-weight: 900;
+        user-select: none;
     }
 
     .catchphrase-sub {
         margin-block-start: 10px;
         font-size: 16px;
+        user-select: none;
     }
 
     .main-intro-block-description {
@@ -239,6 +224,7 @@
     .main-intro-block-title {
         font-size: 18px;
         font-weight: 900;
+        user-select: none;
     }
 
     .main-intro-block-subtext {
@@ -247,6 +233,7 @@
         line-height: 1.4;
         word-break: keep-all;
         opacity: 0;
+        user-select: none;
     }
 
     .main-intro-block-custom {
@@ -255,6 +242,7 @@
         gap: 10px;
         padding: 20px;
         height: 100%;
+        user-select: none;
     }
 
     .main-intro-block-background {
@@ -277,6 +265,7 @@
         color: rgb(var(--main));
         font-size: 18px;
         font-weight: 900;
+        user-select: none;
     }
 
     .main-intro-button {

@@ -78,6 +78,10 @@
 
 <style lang="scss" scoped>
 
+    h1, p {
+        user-select: none;
+    }
+
 #grtSection {
         padding-bottom: 5rem;
     }
@@ -137,6 +141,8 @@
 
     [data-grt-ceo-sign] {
         width: 6rem;
+        user-select: none;
+        pointer-events: none;
     }
 
     #outlineSection {

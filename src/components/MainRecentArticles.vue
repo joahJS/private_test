@@ -79,15 +79,17 @@ const { newsList } = storeToRefs(newsStore)
         justify-content: space-between;
         align-items: center;
         padding-block: 20px;
+        user-select: none;
     }
 
     .recent-article-board-name {
         font-size: 20px;
         font-weight: 900;
+        user-select: none;
     }
 
     .recent-article-list {
-        border-block: 1px solid rgba(var(--black), .15);
+        border-top: 1px solid rgba(var(--black), .15);
     }
 
     .recent-article-item {
@@ -97,6 +99,8 @@ const { newsList } = storeToRefs(newsStore)
         gap: 15px;
         padding: 20px 8px;
         transition: background-color .15s;
+        border-bottom: 1px solid rgba(var(--black), .15);
+        user-select: none;
 
         & + & {
             border-block-start: 1px solid rgba(var(--black), .15);

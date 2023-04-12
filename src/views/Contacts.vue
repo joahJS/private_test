@@ -6,7 +6,7 @@
 
         <h1 class="page-title">견적문의</h1>
 
-        <form method="POST" action="https://script.google.com/macros/s/AKfycbysALxosnJD2movFfCpRyJhFDDuwrY9bO8wKK1f-IB3FZ4OKI9EMKip6E3nEdVayKtw/exec" target="frAttachFiles">
+        <form method="POST" action="https://script.google.com/macros/s/AKfycbzQwXdbxWnh2QZOeeoPNfmGoXcKGIBBKmybf_ZmOG8vxhbFSC8-gSl4MhlIs-iZ7StgTw/exec" target="frAttachFiles">
             <div class="contact-input-box w-full ">
                 <p class="contact-input-name">제목</p>
                 <p class="w-full self-center"><input type="text" class="contact-input-line" name="제목"></p>
@@ -54,7 +54,7 @@
                 </ul>
             </div>
             <div class="p-2 w-full">
-                <label><input type="checkbox" v-model="agreeIsCheck" name="agreeIsCheck" ref="agreeCheck"/> 개인정보 수집 및 이용 내용에 동의 합니다.</label>
+                <label><input type="checkbox" v-model="agreeIsCheck" ref="agreeCheck" checked="checked"> 개인정보 수집 및 이용 내용에 동의 합니다.</label>
             </div>
 
             <div data-cont-agree-box class="mx-auto mt-10 mb-10">
@@ -84,6 +84,22 @@
     let agreeIsCheck = ref(false)
     const submitComplete = ref(false)
 
+    watch(agreeIsCheck, () => {
+        if ( agreeIsCheck.value == true ) {
+            console.log('true!')
+        } else {
+            console.log('false!')
+        }
+    })
+
+     
+    //  1. https://docs.google.com/spreadsheets/d/1Bn4m6iA_Xch1zzhNvo_6CoQWqOAgwwkOWJKC-phHx2Q/copy 에서 사본 만들기
+    //  2. 확장프로그램 > Apps Script
+    //  3. 8번째 줄 // var TO_ADDRESS = "example@email.net"; 에 받을 고객사 메일 삽입(example@email.net 자리에 삽입) 후 저장 (ctrl+s)
+    //    ※ 21번째 줄 // 발송될 메일에 inline으로 스타일 삽입 가능 >> result += "<h4 style='text-transform: capitalize; margin-bottom: 0'>" + key + "</h4><div>" + sanitizeInput(obj[key]) + "</div>";
+    //  4. 배포 > 새 배포
+    //  5. 옵션 선택 >>  다음 사용자 인증 정보로 실행 : 웹 앱을 액세스하는 사용자, 액세스 권한이 있는 사용자 : 모든 사용자 선택 후 배포
+    //  6. form의 action=""에 복사한 URL 삽입(웹 앱)
     
 </script> <!-- Logic Ends -->
 
